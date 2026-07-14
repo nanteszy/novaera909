@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão 2026.2 - Nova Era nº 909</title>
+
+<!-- Leaflet CSS para o Mapa -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<!-- FontAwesome para ícones bonitos nos botões -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+/* Reset básico e background geral */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: #0D1117;
+    /* FILTRO ESCURO REMOVIDO! A imagem agora está com a claridade original */
+    background-image: url('https://i.postimg.cc/DwP9yh7c/Airbrush-IMAGE-ENHANCER-1783997909573-1783997909573.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+/* Container principal centralizado */
+.container {
+    width: 100%;
+    max-width: 650px;
+    padding: 20px;
+}
+
+/* Header com Brasão e Título */
+header {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 25px;
+}
+
+.logo-capitulo {
+    width: 90px;
+    height: 90px;
+    border-radius: 18px;
+    background: #000;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin-bottom: 15px;
+}
+
+header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+header p {
+    font-size: 18px;
+    color: #e0e0e0;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* Estilo dos painéis (Cards) baseados no Jotform */
+.section-card {
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+}
+
+.section-card h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.section-card .desc {
+    font-size: 14px;
+    color: #a0a0a0;
+    margin-bottom: 20px;
+}
+
+/* Divisória interna */
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-top: 25px;
+}
+
+/* Botões do Menu */
+.btn-container-single {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-container-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.custom-btn {
+    background: #110d0a; 
+    border: 1px solid #2d241e;
+    color: white;
+    border-radius: 14px;
+    padding: 20px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+    text-align: center;
+}
+
+.custom-btn:hover {
+    transform: translateY(-2px);
+    background: #1a1410;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.custom-btn img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+.custom-btn i {
+    font-size: 32px;
+    color: #a5a5a5;
+}
+
+/* Botão do WhatsApp (Verde) */
+.btn-whatsapp {
+    background: #4ecc64;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 15px 25px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    width: 100%;
+    max-width: 320px;
+    margin: 5px auto 0 auto;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-whatsapp:hover {
+    background: #45b759;
+    transform: translateY(-2px);
+}
+
+.whatsapp-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* Seção Especial do Mapa da Irmandade */
+#map {
+    height: 350px;
+    width: 100%;
+    border-radius: 12px;
+    border: 2px solid #D4AF37;
+    margin-top: 15px;
+}
+
+.leaflet-popup-content-wrapper {
+    background: #161B22;
+    color: white;
+    border: 2px solid #D4AF37;
+    border-radius: 12px;
+}
+
+.leaflet-popup-tip {
+    background: #161B22;
+}
+
+.popup {
+    text-align: center;
+}
+
+.popup h2 {
+    color: #D4AF37 !important;
+    margin-bottom: 5px;
+    font-size: 16px !important;
+}
+
+.popup p {
+    color: white !important;
+    font-size: 13px !important;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Cabeçalho Principal -->
+    <header>
+        <!-- Brasão do Capítulo -->
+        <img class="logo-capitulo" src="https://i.postimg.cc/Nj2KWNY8/CAPITULONOVAERA909-removebg-preview.png">
+        <h1>Gestão 2026.2</h1>
+        <p>Nova Era nº 909</p>
+    </header>
+
+    <!-- 1. Seção: E-nominata -->
+    <div class="section-card">
+        <h2>E-nominata</h2>
+        <p class="desc">Uma nova forma de fazer a nominata.</p>
+        
+        <div class="btn-container-single">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdn668Ca0zVkghBD-PK4jMBfPXQydRb292uMLVEpnkQGBj3gg/viewform" target="_blank" class="custom-btn">
+                <i class="fa-solid fa-building-columns" style="color: #ffffff;"></i>
+                <span>E-Nominata</span>
+            </a>
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <!-- 2. Seção: Estudos -->
+    <div class="section-card">
+        <h2>Estudos</h2>
+        <p class="desc">Reservado a quem quer estudar um pouco mais sobre a ordem.</p>
+        
+        <div class="btn-container-grid">
+            <a href="https://drive.google.com/drive/folders/1zzTNtnxxXr3s2uOVQokQtA8FppJ04M7p" target="_blank" class="custom-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Google Drive">
+                <span>DRIVE DE ESTUDOS</span>
+            </a>
+            <a href="https://sis.demolaybrasil.org.br/login" target="_blank" class="custom-btn">
+                <!-- Imagem do SISDM (Substitua o link abaixo quando tiver a imagem) -->
+                <img src="COLOQUE_O_LINK_DA_IMAGEM_AQUI" alt="Logo SISDM">
+                <span>SISDM</span>
+            </a>
+        </div>
+        <div class="divider"></div>
+    </div>
+
+    <!-- 3. Seção: Mapa da Irmandade -->
+    <div class="section-card">
+        <h2>Mapa da Irmandade</h2>
+        <p class="desc">Localização geográfica dos nossos irmãos.</p>
+        
+        <div id="map"></div>
+        <div class="divider"></div>
+    </div>
+
+    <!-- 4. Seção: Playlist DeMolay -->
+    <div class="section-card">
+        <h2>Playlist Demolay</h2>
+        <p class="desc">para quem quer reviver um pouco do capitulo em casa...</p>
+        
+        <!-- PLAYER DO SPOTIFY TOTALMENTE CONFIGURADO E FUNCIONANDO -->
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSp6REg7j?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        
+        <div class="divider"></div>
+    </div>
+
+    <!-- 5. Seção: Ajuda ao irmão -->
+    <div class="section-card">
+        <h2>Ajuda ao irmão</h2>
+        <p class="desc">peça-me ajuda com qualquer assunto referente a ordem Demolay.</p>
+        
+        <div class="whatsapp-wrapper">
+            <a href="https://wa.me/5567992269336?text=Olá,%20preciso%20de%20ajuda" target="_blank" class="btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> Portal de ajuda ao irmão
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- Scripts do Leaflet para carregar o Mapa e os Marcadores -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Cria o mapa centralizado em Campo Grande
+const mapa = L.map('map').setView([-20.46, -54.61], 11);
+
+// Camada visual do mapa
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
+}).addTo(mapa);
+
+// Lista de membros do Capítulo
+const membros = [
+    {
+        nome: "Nantes",
+        bairro: "Novos Estados",
+        lat: -20.401,
+        lng: -54.611
+    },
+    {
+        nome: "Hamer",
+        bairro: "Parque Lajeado",
+        lat: -20.528,
+        lng: -54.619
+    }
+];
+
+// Adiciona os marcadores no mapa
+membros.forEach(m => {
+    L.marker([m.lat, m.lng]).addTo(mapa)
+    .bindPopup(`
+        <div class="popup">
+            <h2>${m.nome}</h2>
+            <p>📍 ${m.bairro}</p>
+        </div>
+    `);
+});
+</script>
+
+</body>
+</html>
