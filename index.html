@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestão 2026.2 - Nova Era nº 909</title>
+<title>Nova Era nº 909 - Gestão 2026.2</title>
 
 <!-- Leaflet CSS para o Mapa -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -21,8 +21,8 @@
 
 body {
     background: #0D1117;
-    /* FILTRO ESCURO REMOVIDO! A imagem agora está com a claridade original */
-    background-image: url('https://i.postimg.cc/DwP9yh7c/Airbrush-IMAGE-ENHANCER-1783997909573-1783997909573.png');
+    /* Imagem de fundo original */
+    background-image: url('https://demolayparana.org.br/wp-content/uploads/revslider/demolay-banner/BANNER-DEMOLAY.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -49,8 +49,9 @@ header {
 }
 
 .logo-capitulo {
-    width: 90px;
-    height: 90px;
+    width: 120px; /* Aumentado para dar mais destaque e nitidez */
+    height: 120px; /* Aumentado para dar mais destaque e nitidez */
+    object-fit: contain; /* Impede que a imagem fique distorcida */
     border-radius: 18px;
     background: #000;
     padding: 5px;
@@ -73,7 +74,7 @@ header p {
     text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-/* Estilo dos painéis (Cards) baseados no Jotform */
+/* Estilo dos painéis (Cards) */
 .section-card {
     background: rgba(0, 0, 0, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -150,15 +151,14 @@ header p {
     color: #a5a5a5;
 }
 
-/* Botão do WhatsApp (Verde) */
-.btn-whatsapp {
-    background: #4ecc64;
+/* Botão do WhatsApp e Spotify (Largo) */
+.btn-verde-largo {
     border: none;
     color: white;
     font-size: 16px;
     font-weight: 600;
     padding: 15px 25px;
-    border-radius: 8px;
+    border-radius: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -170,12 +170,11 @@ header p {
     transition: transform 0.2s, background-color 0.2s;
 }
 
-.btn-whatsapp:hover {
-    background: #45b759;
+.btn-verde-largo:hover {
     transform: translateY(-2px);
 }
 
-.whatsapp-wrapper {
+.center-wrapper {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -224,15 +223,15 @@ header p {
     <!-- Cabeçalho Principal -->
     <header>
         <!-- Brasão do Capítulo -->
-        <img class="logo-capitulo" src="https://i.postimg.cc/Nj2KWNY8/CAPITULONOVAERA909-removebg-preview.png">
-        <h1>Gestão 2026.2</h1>
-        <p>Nova Era nº 909</p>
+        <img class="logo-capitulo" src="https://i.postimg.cc/Bvwh29fF/logo-nova-era-zul-(1).png">
+        <h1>Nova Era nº 909</h1>
+        <p>Gestão 2026.2</p>
     </header>
 
     <!-- 1. Seção: E-nominata -->
     <div class="section-card">
         <h2>E-nominata</h2>
-        <p class="desc">Uma nova forma de fazer a nominata.</p>
+        <p class="desc">Uma nova forma de organizar a nominata.</p>
         
         <div class="btn-container-single">
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSdn668Ca0zVkghBD-PK4jMBfPXQydRb292uMLVEpnkQGBj3gg/viewform" target="_blank" class="custom-btn">
@@ -254,8 +253,8 @@ header p {
                 <span>DRIVE DE ESTUDOS</span>
             </a>
             <a href="https://sis.demolaybrasil.org.br/login" target="_blank" class="custom-btn">
-                <!-- Imagem do SISDM (Substitua o link abaixo quando tiver a imagem) -->
-                <img src="COLOQUE_O_LINK_DA_IMAGEM_AQUI" alt="Logo SISDM">
+                <!-- Imagem do SISDM -->
+                <img src="https://i.postimg.cc/j2h1qQbJ/brasao-demolay1-removebg.webp" alt="Logo SISDM">
                 <span>SISDM</span>
             </a>
         </div>
@@ -273,11 +272,16 @@ header p {
 
     <!-- 4. Seção: Playlist DeMolay -->
     <div class="section-card">
-        <h2>Playlist Demolay</h2>
-        <p class="desc">para quem quer reviver um pouco do capitulo em casa...</p>
+        <h2>Playlist DeMolay</h2>
+        <p class="desc">Para quem quer reviver um pouco do capítulo em casa...</p>
         
-        <!-- PLAYER DO SPOTIFY TOTALMENTE CONFIGURADO E FUNCIONANDO -->
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4sWSp6REg7j?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <!-- BOTÃO DO SPOTIFY QUE FUNCIONA EM TODOS OS NAVEGADORES E CELULARES -->
+        <div class="center-wrapper">
+            <!-- COLOQUE O LINK DA SUA PLAYLIST AQUI NO "href" -->
+            <a href="COLOQUE_O_LINK_DA_SUA_PLAYLIST_AQUI" target="_blank" class="btn-verde-largo" style="background: #1DB954; box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);">
+                <i class="fa-brands fa-spotify" style="font-size: 22px;"></i> Ouvir Playlist no Spotify
+            </a>
+        </div>
         
         <div class="divider"></div>
     </div>
@@ -285,11 +289,11 @@ header p {
     <!-- 5. Seção: Ajuda ao irmão -->
     <div class="section-card">
         <h2>Ajuda ao irmão</h2>
-        <p class="desc">peça-me ajuda com qualquer assunto referente a ordem Demolay.</p>
+        <p class="desc">Peça-me ajuda com qualquer assunto referente à Ordem DeMolay.</p>
         
-        <div class="whatsapp-wrapper">
-            <a href="https://wa.me/5567992269336?text=Olá,%20preciso%20de%20ajuda" target="_blank" class="btn-whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> Portal de ajuda ao irmão
+        <div class="center-wrapper">
+            <a href="https://wa.me/5567992269336?text=Olá,%20preciso%20de%20ajuda" target="_blank" class="btn-verde-largo" style="background: #4ecc64;">
+                <i class="fa-brands fa-whatsapp" style="font-size: 22px;"></i> Portal de ajuda ao irmão
             </a>
         </div>
     </div>
