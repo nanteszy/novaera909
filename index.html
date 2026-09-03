@@ -49,9 +49,9 @@ header {
 }
 
 .logo-capitulo {
-    width: 120px; /* Aumentado para dar mais destaque e nitidez */
-    height: 120px; /* Aumentado para dar mais destaque e nitidez */
-    object-fit: contain; /* Impede que a imagem fique distorcida */
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
     border-radius: 18px;
     background: #000;
     padding: 5px;
@@ -306,10 +306,10 @@ header p {
 // Cria o mapa centralizado em Campo Grande
 const mapa = L.map('map').setView([-20.46, -54.61], 11);
 
-// Camada visual do mapa
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+// Camada visual do mapa (CartoDB Dark Matter - Sem API Key e visual escuro)
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 19,
-    attribution: '© OpenStreetMap'
+    attribution: '© OpenStreetMap contributors © CARTO'
 }).addTo(mapa);
 
 // Lista de membros do Capítulo
