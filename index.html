@@ -1,344 +1,2488 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova Era nº 909 - Gestão 2026.2</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Leaflet CSS para o Mapa -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<!-- FontAwesome para ícones bonitos nos botões -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Nova Era nº 909 — Gestão 2026.2</title>
 
-<style>
-/* Reset básico e background geral */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
+  <!-- =========================
+       FONTES
+  ========================== -->
 
-body {
-    background: #0D1117;
-    /* Imagem de fundo original */
-    background-image: url('https://demolayparana.org.br/wp-content/uploads/revslider/demolay-banner/BANNER-DEMOLAY.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding-bottom: 50px;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-/* Container principal centralizado */
-.container {
-    width: 100%;
-    max-width: 650px;
-    padding: 20px;
-}
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  >
 
-/* Header com Brasão e Título */
-header {
-    text-align: center;
-    margin-top: 30px;
-    margin-bottom: 25px;
-}
+  <style>
 
-.logo-capitulo {
-    width: 120px;
-    height: 120px;
-    object-fit: contain;
-    border-radius: 18px;
-    background: #000;
-    padding: 5px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    margin-bottom: 15px;
-}
+    /* =========================================================
+       VARIÁVEIS
+    ========================================================= */
 
-header h1 {
-    font-size: 36px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin-bottom: 5px;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-}
+    :root {
 
-header p {
-    font-size: 18px;
-    color: #e0e0e0;
-    font-weight: 500;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
+      --bg: #020914;
+      --bg-secondary: #061224;
+      --bg-tertiary: #01060d;
 
-/* Estilo dos painéis (Cards) */
-.section-card {
-    background: rgba(0, 0, 0, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 25px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-}
+      --text: #f3f3f0;
+      --text-soft: #9ea6b2;
 
-.section-card h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
+      --gold: #c9a955;
+      --gold-soft: #dbc77e;
 
-.section-card .desc {
-    font-size: 14px;
-    color: #a0a0a0;
-    margin-bottom: 20px;
-}
+      --border: rgba(201, 169, 85, 0.25);
+      --soft-border: rgba(255,255,255,0.10);
 
-/* Divisória interna */
-.divider {
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin-top: 25px;
-}
+    }
 
-/* Botões do Menu */
-.btn-container-single {
-    display: flex;
-    flex-direction: column;
-}
+    body.light {
 
-.btn-container-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
+      --bg: #ffffff;
+      --bg-secondary: #f6f5f1;
+      --bg-tertiary: #eceae3;
 
-.custom-btn {
-    background: #110d0a; 
-    border: 1px solid #2d241e;
-    color: white;
-    border-radius: 14px;
-    padding: 20px;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-weight: 600;
-    font-size: 14px;
-    transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-    text-align: center;
-}
+      --text: #111111;
+      --text-soft: #686868;
 
-.custom-btn:hover {
-    transform: translateY(-2px);
-    background: #1a1410;
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
-}
+      --gold: #aa8427;
+      --gold-soft: #8d6b20;
 
-.custom-btn img {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-}
+      --border: rgba(170,132,39,0.30);
+      --soft-border: rgba(0,0,0,0.10);
 
-.custom-btn i {
-    font-size: 32px;
-    color: #a5a5a5;
-}
+    }
 
-/* Botão do WhatsApp e Spotify (Largo) */
-.btn-verde-largo {
-    border: none;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 15px 25px;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-decoration: none;
-    width: 100%;
-    max-width: 320px;
-    margin: 5px auto 0 auto;
-    transition: transform 0.2s, background-color 0.2s;
-}
 
-.btn-verde-largo:hover {
-    transform: translateY(-2px);
-}
+    /* =========================================================
+       RESET
+    ========================================================= */
 
-.center-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* Seção Especial do Mapa da Irmandade */
-#map {
-    height: 350px;
-    width: 100%;
-    border-radius: 12px;
-    border: 2px solid #D4AF37;
-    margin-top: 15px;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.leaflet-popup-content-wrapper {
-    background: #161B22;
-    color: white;
-    border: 2px solid #D4AF37;
-    border-radius: 12px;
-}
+    body {
 
-.leaflet-popup-tip {
-    background: #161B22;
-}
+      background: var(--bg);
+      color: var(--text);
 
-.popup {
-    text-align: center;
-}
+      font-family: 'Montserrat', sans-serif;
 
-.popup h2 {
-    color: #D4AF37 !important;
-    margin-bottom: 5px;
-    font-size: 16px !important;
-}
+      transition:
+        background .35s ease,
+        color .35s ease;
 
-.popup p {
-    color: white !important;
-    font-size: 13px !important;
-}
-</style>
+      overflow-x: hidden;
+
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    /* =========================================================
+       TOPO
+    ========================================================= */
+
+    .topbar {
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+
+      z-index: 1000;
+
+      padding: 20px 5%;
+
+      display: flex;
+
+      justify-content: space-between;
+      align-items: center;
+
+      border-bottom: 1px solid var(--soft-border);
+
+      background: rgba(2,9,20,.72);
+
+      backdrop-filter: blur(18px);
+
+    }
+
+    body.light .topbar {
+      background: rgba(255,255,255,.82);
+    }
+
+    .brand {
+
+      font-size: 12px;
+
+      letter-spacing: .18em;
+
+      text-transform: uppercase;
+
+      font-weight: 500;
+
+    }
+
+    .nav {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 27px;
+
+    }
+
+    .nav a {
+
+      font-size: 10px;
+
+      color: var(--text-soft);
+
+      letter-spacing: .15em;
+
+      text-transform: uppercase;
+
+      transition: .25s ease;
+
+    }
+
+    .nav a:hover {
+      color: var(--gold);
+    }
+
+    .theme-toggle {
+
+      width: 38px;
+      height: 38px;
+
+      border-radius: 50%;
+
+      border: 1px solid var(--border);
+
+      background: transparent;
+
+      color: var(--text);
+
+      cursor: pointer;
+
+      font-size: 16px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      transition: .3s ease;
+
+    }
+
+    .theme-toggle:hover {
+
+      color: var(--gold);
+
+      border-color: var(--gold);
+
+      transform: rotate(12deg);
+
+    }
+
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .hero {
+
+      min-height: 100vh;
+
+      position: relative;
+
+      display: flex;
+
+      align-items: center;
+
+      overflow: hidden;
+
+      background:
+
+        linear-gradient(
+          90deg,
+          rgba(2,9,20,.78),
+          rgba(2,9,20,.42),
+          rgba(2,9,20,.76)
+        ),
+
+        url('https://demolayparana.org.br/wp-content/uploads/revslider/demolay-banner/BANNER-DEMOLAY.jpg')
+
+        center / cover no-repeat;
+
+    }
+
+    body.light .hero {
+
+      background:
+
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.80),
+          rgba(255,255,255,.46),
+          rgba(255,255,255,.82)
+        ),
+
+        url('https://demolayparana.org.br/wp-content/uploads/revslider/demolay-banner/BANNER-DEMOLAY.jpg')
+
+        center / cover no-repeat;
+
+    }
+
+    .hero-content {
+
+      position: relative;
+
+      z-index: 2;
+
+      width: 90%;
+
+      max-width: 1250px;
+
+      margin: auto;
+
+      padding-top: 80px;
+
+    }
+
+    .hero-logo {
+
+      width: 95px;
+      height: 95px;
+
+      object-fit: contain;
+
+      margin-bottom: 35px;
+
+      filter:
+        drop-shadow(0 10px 30px rgba(0,0,0,.25));
+
+    }
+
+    .eyebrow {
+
+      font-size: 10px;
+
+      letter-spacing: .3em;
+
+      text-transform: uppercase;
+
+      color: var(--gold-soft);
+
+      margin-bottom: 17px;
+
+    }
+
+    .hero h1 {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(90px, 15vw, 190px);
+
+      font-weight: 300;
+
+      line-height: .72;
+
+      letter-spacing: -.06em;
+
+      margin-left: -7px;
+
+      margin-bottom: 40px;
+
+    }
+
+    .hero-meta {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 20px;
+
+    }
+
+    .hero-meta span {
+
+      font-size: 10px;
+
+      letter-spacing: .16em;
+
+      text-transform: uppercase;
+
+      color: var(--text-soft);
+
+    }
+
+    .hero-line {
+
+      width: 50px;
+
+      height: 1px;
+
+      background: var(--gold);
+
+    }
+
+
+    /* =========================================================
+       SEÇÕES
+    ========================================================= */
+
+    section {
+
+      border-bottom: 1px solid var(--soft-border);
+
+    }
+
+    .section-inner {
+
+      width: 90%;
+
+      max-width: 1250px;
+
+      margin: auto;
+
+    }
+
+
+    /* =========================================================
+       INTRODUÇÃO
+    ========================================================= */
+
+    .intro {
+
+      padding: 170px 0 150px;
+
+      background: var(--bg);
+
+    }
+
+    .intro-grid {
+
+      display: grid;
+
+      grid-template-columns: .9fr 1.1fr;
+
+      gap: 100px;
+
+      align-items: start;
+
+    }
+
+    .intro-title {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(48px, 6vw, 82px);
+
+      line-height: .92;
+
+      font-weight: 300;
+
+      letter-spacing: -.045em;
+
+    }
+
+    .intro-title em {
+
+      color: var(--gold);
+
+      font-style: italic;
+
+    }
+
+    .intro-text {
+
+      max-width: 580px;
+
+      color: var(--text-soft);
+
+      font-size: 14px;
+
+      line-height: 2.1;
+
+      font-weight: 300;
+
+      padding-top: 12px;
+
+    }
+
+
+    /* =========================================================
+       FOTO PANORÂMICA
+    ========================================================= */
+
+    .visual-break {
+
+      background: var(--bg-tertiary);
+
+      padding: 0;
+
+      border: 0;
+
+    }
+
+    .visual-break-wrap {
+
+      width: 100%;
+
+      position: relative;
+
+    }
+
+    .visual-break img {
+
+      width: 100%;
+
+      height: 74vh;
+
+      min-height: 500px;
+
+      object-fit: cover;
+
+      display: block;
+
+      filter: brightness(.70) grayscale(.15);
+
+    }
+
+    .visual-break-overlay {
+
+      position: absolute;
+
+      left: 7%;
+
+      bottom: 70px;
+
+      max-width: 700px;
+
+      color: white;
+
+    }
+
+    .visual-break-small {
+
+      display: block;
+
+      margin-bottom: 15px;
+
+      font-size: 10px;
+
+      letter-spacing: .28em;
+
+      text-transform: uppercase;
+
+    }
+
+    .visual-break-title {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(55px, 8vw, 105px);
+
+      line-height: .83;
+
+      font-weight: 300;
+
+      letter-spacing: -.055em;
+
+    }
+
+
+    /* =========================================================
+       BLOCO EDITORIAL
+    ========================================================= */
+
+    .editorial {
+
+      background: var(--bg-secondary);
+
+      padding: 180px 0;
+
+    }
+
+    .editorial-grid {
+
+      display: grid;
+
+      grid-template-columns: 1.15fr .75fr;
+
+      gap: 95px;
+
+      align-items: center;
+
+    }
+
+    .editorial-photo-wrap {
+
+      position: relative;
+
+    }
+
+    .editorial-photo {
+
+      width: 100%;
+
+      height: 620px;
+
+      overflow: hidden;
+
+    }
+
+    .editorial-photo img {
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      transition: transform 1s ease;
+
+    }
+
+    .editorial-photo:hover img {
+      transform: scale(1.025);
+    }
+
+    .editorial-number {
+
+      position: absolute;
+
+      right: -25px;
+
+      bottom: -30px;
+
+      width: 105px;
+      height: 105px;
+
+      border-radius: 50%;
+
+      border: 1px solid var(--gold);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 28px;
+
+      color: var(--gold);
+
+      background: var(--bg-secondary);
+
+    }
+
+    .editorial-content {
+
+      padding-left: 15px;
+
+    }
+
+    .editorial-tag {
+
+      font-size: 9px;
+
+      letter-spacing: .25em;
+
+      text-transform: uppercase;
+
+      color: var(--gold);
+
+      margin-bottom: 28px;
+
+    }
+
+    .editorial-content h2 {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-weight: 300;
+
+      font-size: clamp(50px, 5vw, 75px);
+
+      line-height: .88;
+
+      letter-spacing: -.045em;
+
+      margin-bottom: 32px;
+
+    }
+
+    .editorial-content h2 em {
+
+      font-style: italic;
+
+      color: var(--gold);
+
+    }
+
+    .editorial-content p {
+
+      color: var(--text-soft);
+
+      line-height: 2;
+
+      font-size: 13px;
+
+      font-weight: 300;
+
+      margin-bottom: 22px;
+
+    }
+
+    .editorial-arrow {
+
+      margin-top: 34px;
+
+      width: 45px;
+
+      height: 1px;
+
+      background: var(--gold);
+
+    }
+
+
+    /* =========================================================
+       E-NOMINATA
+    ========================================================= */
+
+    .content-section {
+
+      background: var(--bg);
+
+      padding: 160px 0;
+
+    }
+
+    .section-head {
+
+      display: grid;
+
+      grid-template-columns: 1fr .8fr;
+
+      gap: 80px;
+
+      align-items: end;
+
+      margin-bottom: 70px;
+
+    }
+
+    .section-title {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(58px, 7vw, 98px);
+
+      line-height: .85;
+
+      font-weight: 300;
+
+      letter-spacing: -.055em;
+
+    }
+
+    .section-description {
+
+      color: var(--text-soft);
+
+      font-size: 13px;
+
+      line-height: 1.95;
+
+      max-width: 470px;
+
+    }
+
+
+    /* =========================================================
+       CARDS
+    ========================================================= */
+
+    .cards {
+
+      display: grid;
+
+      grid-template-columns: repeat(2,1fr);
+
+      border-top: 1px solid var(--border);
+
+      border-left: 1px solid var(--border);
+
+    }
+
+    .card {
+
+      min-height: 330px;
+
+      padding: 45px;
+
+      border-right: 1px solid var(--border);
+
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      transition: background .35s ease;
+
+    }
+
+    .card:hover {
+
+      background: rgba(201,169,85,.035);
+
+    }
+
+    .card-tag {
+
+      color: var(--gold);
+
+      font-size: 9px;
+
+      letter-spacing: .24em;
+
+      text-transform: uppercase;
+
+    }
+
+    .card h3 {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 49px;
+
+      line-height: .9;
+
+      font-weight: 300;
+
+      letter-spacing: -.035em;
+
+      margin: 28px 0 20px;
+
+    }
+
+    .card p {
+
+      color: var(--text-soft);
+
+      font-size: 13px;
+
+      line-height: 1.9;
+
+      font-weight: 300;
+
+      max-width: 500px;
+
+    }
+
+    .card-link {
+
+      margin-top: 35px;
+
+      color: var(--gold);
+
+      font-size: 9px;
+
+      letter-spacing: .18em;
+
+      text-transform: uppercase;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+    }
+
+    .arrow {
+
+      font-size: 17px;
+
+      transition: transform .25s ease;
+
+    }
+
+    .card-link:hover .arrow {
+
+      transform: translateX(5px);
+
+    }
+
+
+    /* =========================================================
+       FOTO DESLOCADA
+    ========================================================= */
+
+    .offset-photo {
+
+      background: var(--bg);
+
+      padding: 150px 0 180px;
+
+    }
+
+    .offset-layout {
+
+      position: relative;
+
+      min-height: 790px;
+
+    }
+
+    .offset-main {
+
+      width: 65%;
+
+      height: 640px;
+
+      overflow: hidden;
+
+      margin-left: 4%;
+
+    }
+
+    .offset-main img {
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+    }
+
+    .offset-small {
+
+      position: absolute;
+
+      right: 4%;
+
+      bottom: 20px;
+
+      width: 32%;
+
+      height: 390px;
+
+      overflow: hidden;
+
+      border: 12px solid var(--bg);
+
+    }
+
+    .offset-small img {
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+    }
+
+    .offset-caption {
+
+      position: absolute;
+
+      top: 80px;
+
+      right: 9%;
+
+      width: 210px;
+
+    }
+
+    .offset-caption span {
+
+      display: block;
+
+      font-size: 9px;
+
+      color: var(--gold);
+
+      letter-spacing: .22em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 15px;
+
+    }
+
+    .offset-caption p {
+
+      color: var(--text-soft);
+
+      font-size: 11px;
+
+      line-height: 1.8;
+
+    }
+
+
+    /* =========================================================
+       FOTO VERTICAL
+    ========================================================= */
+
+    .portrait-section {
+
+      background: var(--bg-secondary);
+
+      padding: 180px 0;
+
+    }
+
+    .portrait-grid {
+
+      display: grid;
+
+      grid-template-columns: .7fr 1fr;
+
+      gap: 110px;
+
+      align-items: center;
+
+    }
+
+    .portrait-image {
+
+      width: 100%;
+
+      height: 650px;
+
+      overflow: hidden;
+
+      position: relative;
+
+    }
+
+    .portrait-image img {
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+    }
+
+    .portrait-text {
+
+      max-width: 480px;
+
+    }
+
+    .portrait-text small {
+
+      display: block;
+
+      color: var(--gold);
+
+      text-transform: uppercase;
+
+      letter-spacing: .25em;
+
+      font-size: 9px;
+
+      margin-bottom: 25px;
+
+    }
+
+    .portrait-text h2 {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(55px, 6vw, 90px);
+
+      line-height: .84;
+
+      font-weight: 300;
+
+      letter-spacing: -.05em;
+
+      margin-bottom: 30px;
+
+    }
+
+    .portrait-text p {
+
+      color: var(--text-soft);
+
+      line-height: 2;
+
+      font-size: 13px;
+
+    }
+
+
+    /* =========================================================
+       PLAYLIST
+    ========================================================= */
+
+    .playlist {
+
+      padding: 150px 0;
+
+      background: var(--bg);
+
+    }
+
+    .playlist-box {
+
+      border-top: 1px solid var(--border);
+
+      border-bottom: 1px solid var(--border);
+
+      padding: 75px 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 70px;
+
+    }
+
+    .playlist-box h2 {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(58px, 7vw, 100px);
+
+      font-weight: 300;
+
+      line-height: .82;
+
+      letter-spacing: -.055em;
+
+      margin-bottom: 25px;
+
+    }
+
+    .playlist-box p {
+
+      color: var(--text-soft);
+
+      max-width: 570px;
+
+      font-size: 13px;
+
+      line-height: 1.95;
+
+    }
+
+    .spotify-button {
+
+      flex-shrink: 0;
+
+      padding: 17px 30px;
+
+      border: 1px solid var(--gold);
+
+      color: var(--gold);
+
+      text-transform: uppercase;
+
+      letter-spacing: .18em;
+
+      font-size: 9px;
+
+      transition: .3s ease;
+
+    }
+
+    .spotify-button:hover {
+
+      background: var(--gold);
+
+      color: var(--bg);
+
+    }
+
+
+    /* =========================================================
+       GALERIA
+    ========================================================= */
+
+    .gallery-section {
+
+      background: var(--bg-secondary);
+
+      padding: 170px 0 190px;
+
+    }
+
+    .gallery-intro {
+
+      margin-bottom: 90px;
+
+    }
+
+    .gallery-intro h2 {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-weight: 300;
+
+      font-size: clamp(65px, 8vw, 115px);
+
+      line-height: .78;
+
+      letter-spacing: -.055em;
+
+    }
+
+    .gallery-intro h2 em {
+
+      color: var(--gold);
+
+      font-style: italic;
+
+    }
+
+    .gallery-intro p {
+
+      margin-top: 30px;
+
+      color: var(--text-soft);
+
+      max-width: 480px;
+
+      font-size: 12px;
+
+      line-height: 1.9;
+
+    }
+
+
+    .gallery {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 25px;
+
+      align-items: start;
+
+    }
+
+    .gallery-item {
+
+      overflow: hidden;
+
+      background: var(--bg-tertiary);
+
+    }
+
+    .gallery-item img {
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      display: block;
+
+      transition: transform .9s ease;
+
+    }
+
+    .gallery-item:hover img {
+
+      transform: scale(1.03);
+
+    }
+
+    .gallery-item.one {
+
+      height: 600px;
+
+    }
+
+    .gallery-item.two {
+
+      height: 430px;
+
+      margin-top: 170px;
+
+    }
+
+    .gallery-item.three {
+
+      height: 420px;
+
+      margin-top: -40px;
+
+    }
+
+    .gallery-item.four {
+
+      height: 610px;
+
+      margin-top: 70px;
+
+    }
+
+
+    /* =========================================================
+       AJUDA
+    ========================================================= */
+
+    .help {
+
+      background: var(--bg);
+
+      padding: 170px 0;
+
+    }
+
+    .help-grid {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 100px;
+
+      align-items: center;
+
+    }
+
+    .help h2 {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: clamp(65px, 8vw, 110px);
+
+      line-height: .78;
+
+      font-weight: 300;
+
+      letter-spacing: -.06em;
+
+    }
+
+    .help h2 em {
+
+      color: var(--gold);
+
+      font-style: italic;
+
+    }
+
+    .help-text {
+
+      color: var(--text-soft);
+
+      font-size: 13px;
+
+      line-height: 2;
+
+      max-width: 450px;
+
+      margin-bottom: 30px;
+
+    }
+
+    .whatsapp-button {
+
+      display: inline-block;
+
+      padding: 17px 29px;
+
+      border: 1px solid var(--gold);
+
+      color: var(--gold);
+
+      text-transform: uppercase;
+
+      letter-spacing: .18em;
+
+      font-size: 9px;
+
+      transition: .3s ease;
+
+    }
+
+    .whatsapp-button:hover {
+
+      background: var(--gold);
+
+      color: var(--bg);
+
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    footer {
+
+      padding: 60px 5%;
+
+      background: var(--bg-tertiary);
+
+    }
+
+    .footer-inner {
+
+      max-width: 1250px;
+
+      margin: auto;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-end;
+
+      gap: 40px;
+
+    }
+
+    .footer-brand {
+
+      font-family: 'Cormorant Garamond', serif;
+
+      font-size: 30px;
+
+      font-weight: 300;
+
+    }
+
+    .footer-sub {
+
+      margin-top: 8px;
+
+      color: var(--text-soft);
+
+      text-transform: uppercase;
+
+      letter-spacing: .2em;
+
+      font-size: 8px;
+
+    }
+
+    .footer-right {
+
+      color: var(--text-soft);
+
+      text-align: right;
+
+      text-transform: uppercase;
+
+      letter-spacing: .13em;
+
+      font-size: 8px;
+
+      line-height: 1.9;
+
+    }
+
+
+    /* =========================================================
+       RESPONSIVO
+    ========================================================= */
+
+    @media (max-width: 950px) {
+
+      .nav {
+        gap: 16px;
+      }
+
+      .nav a {
+        font-size: 8px;
+      }
+
+      .intro-grid,
+      .editorial-grid,
+      .portrait-grid,
+      .section-head,
+      .help-grid {
+
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+      }
+
+      .editorial-content {
+        padding-left: 0;
+      }
+
+      .portrait-grid {
+        gap: 60px;
+      }
+
+      .offset-main {
+        width: 78%;
+      }
+
+      .offset-small {
+        width: 35%;
+      }
+
+    }
+
+
+    @media (max-width: 700px) {
+
+      .topbar {
+        padding: 15px 5%;
+      }
+
+      .brand {
+        font-size: 9px;
+      }
+
+      .nav a {
+        display: none;
+      }
+
+      .hero-content {
+        padding-top: 60px;
+      }
+
+      .hero-logo {
+        width: 78px;
+        height: 78px;
+      }
+
+      .hero h1 {
+        font-size: 88px;
+      }
+
+      .intro {
+        padding: 100px 0;
+      }
+
+      .intro-grid {
+        gap: 45px;
+      }
+
+      .visual-break img {
+        height: 480px;
+        min-height: 0;
+      }
+
+      .visual-break-overlay {
+        left: 6%;
+        bottom: 45px;
+        right: 6%;
+      }
+
+      .editorial {
+        padding: 100px 0;
+      }
+
+      .editorial-photo {
+        height: 450px;
+      }
+
+      .editorial-number {
+        right: -8px;
+        bottom: -20px;
+      }
+
+      .content-section {
+        padding: 100px 0;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 280px;
+        padding: 32px;
+      }
+
+      .offset-photo {
+        padding: 90px 0 120px;
+      }
+
+      .offset-layout {
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .offset-main {
+        width: 92%;
+        height: 430px;
+        margin-left: 0;
+      }
+
+      .offset-small {
+
+        position: relative;
+
+        right: auto;
+        bottom: auto;
+
+        width: 58%;
+        height: 250px;
+
+        margin-left: auto;
+        margin-top: -80px;
+
+        border-width: 8px;
+
+      }
+
+      .offset-caption {
+
+        position: relative;
+
+        top: auto;
+        right: auto;
+
+        width: 90%;
+
+        margin-top: 35px;
+
+      }
+
+      .portrait-section {
+        padding: 100px 0;
+      }
+
+      .portrait-image {
+        height: 470px;
+      }
+
+      .playlist {
+        padding: 100px 0;
+      }
+
+      .playlist-box {
+        display: block;
+        padding: 60px 0;
+      }
+
+      .spotify-button {
+        display: inline-block;
+        margin-top: 35px;
+      }
+
+      .gallery-section {
+        padding: 110px 0;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-item.one,
+      .gallery-item.two,
+      .gallery-item.three,
+      .gallery-item.four {
+
+        height: 390px;
+
+        margin-top: 0;
+
+      }
+
+      .gallery {
+        gap: 15px;
+      }
+
+      .help {
+        padding: 110px 0;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-right {
+        text-align: left;
+      }
+
+    }
+
+  </style>
 </head>
+
+
 <body>
 
-<div class="container">
 
-    <!-- Cabeçalho Principal -->
-    <header>
-        <!-- Brasão do Capítulo -->
-        <img class="logo-capitulo" src="https://i.postimg.cc/Bvwh29fF/logo-nova-era-zul-(1).png">
-        <h1>Nova Era nº 909</h1>
-        <p>Gestão 2026.2</p>
-    </header>
+  <!-- =========================================================
+       TOPO
+  ========================================================== -->
 
-    <!-- 1. Seção: E-nominata -->
-    <div class="section-card">
-        <h2>E-nominata</h2>
-        <p class="desc">Uma nova forma de organizar a nominata.</p>
-        
-        <div class="btn-container-single">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdn668Ca0zVkghBD-PK4jMBfPXQydRb292uMLVEpnkQGBj3gg/viewform" target="_blank" class="custom-btn">
-                <i class="fa-solid fa-building-columns" style="color: #ffffff;"></i>
-                <span>E-Nominata</span>
-            </a>
+  <header class="topbar">
+
+    <a href="#inicio" class="brand">
+      Nova Era nº 909
+    </a>
+
+    <nav class="nav">
+
+      <a href="#inicio">Início</a>
+      <a href="#capitulo">Capítulo</a>
+      <a href="#enominata">E-nominata</a>
+      <a href="#estudos">Estudos</a>
+      <a href="#playlist">Playlist</a>
+      <a href="#ajuda">Ajuda</a>
+
+      <button
+        class="theme-toggle"
+        id="themeToggle"
+        aria-label="Alternar tema"
+      >
+        ☼
+      </button>
+
+    </nav>
+
+  </header>
+
+
+
+  <main>
+
+
+    <!-- =========================================================
+         HERO
+    ========================================================== -->
+
+    <section class="hero" id="inicio">
+
+      <div class="hero-content">
+
+        <img
+          class="hero-logo"
+          src="https://i.postimg.cc/Bvwh29fF/logo-nova-era-zul-(1).png"
+          alt="Logo Nova Era"
+        >
+
+        <div class="eyebrow">
+          Capítulo Nova Era nº 909
         </div>
-        <div class="divider"></div>
+
+        <h1>
+          Nova Era
+        </h1>
+
+        <div class="hero-meta">
+
+          <span>
+            Gestão 2026.2
+          </span>
+
+          <div class="hero-line"></div>
+
+          <span>
+            Ordem DeMolay
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         INTRO
+    ========================================================== -->
+
+    <section class="intro" id="capitulo">
+
+      <div class="section-inner">
+
+        <div class="intro-grid">
+
+          <h2 class="intro-title">
+
+            Uma nova era,<br>
+            um mesmo <em>propósito.</em>
+
+          </h2>
+
+          <p class="intro-text">
+
+            O Capítulo Nova Era nº 909 inicia uma nova gestão
+            mantendo o compromisso com a irmandade, o
+            desenvolvimento pessoal, a liderança e os valores
+            que fortalecem cada irmão.
+
+            <br><br>
+
+            Este espaço reúne os principais recursos da gestão
+            2026.2 e também registra alguns dos momentos
+            construídos ao longo dessa jornada.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         FOTO PANORÂMICA
+         FOTO 01
+    ========================================================== -->
+
+    <section class="visual-break">
+
+      <div class="visual-break-wrap">
+
+        <img
+          src="fotos/foto-01.jpg"
+          alt="Momento do Capítulo Nova Era"
+        >
+
+        <div class="visual-break-overlay">
+
+          <span class="visual-break-small">
+            Nova Era nº 909
+          </span>
+
+          <div class="visual-break-title">
+            Momentos que<br>
+            fazem história.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         EDITORIAL
+         FOTO 02
+    ========================================================== -->
+
+    <section class="editorial">
+
+      <div class="section-inner">
+
+        <div class="editorial-grid">
+
+
+          <div class="editorial-photo-wrap">
+
+            <div class="editorial-photo">
+
+              <img
+                src="fotos/foto-02.jpg"
+                alt="Irmãos do Capítulo Nova Era"
+              >
+
+            </div>
+
+            <div class="editorial-number">
+              909
+            </div>
+
+          </div>
+
+
+          <div class="editorial-content">
+
+            <div class="editorial-tag">
+              Nossa irmandade
+            </div>
+
+            <h2>
+
+              Mais que um
+              <em>capítulo.</em>
+
+            </h2>
+
+            <p>
+
+              Uma irmandade é formada por pessoas,
+              histórias, encontros e experiências que
+              continuam muito depois de cada reunião.
+
+            </p>
+
+            <p>
+
+              Aqui, cada registro representa uma parte
+              da caminhada do Nova Era nº 909.
+
+            </p>
+
+            <div class="editorial-arrow"></div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         E-NOMINATA
+    ========================================================== -->
+
+    <section class="content-section" id="enominata">
+
+      <div class="section-inner">
+
+        <div class="section-head">
+
+          <h2 class="section-title">
+            E-nominata
+          </h2>
+
+          <p class="section-description">
+
+            Acesse a e-nominata da gestão para consultar as
+            informações e acompanhar a organização do
+            Capítulo Nova Era nº 909.
+
+          </p>
+
+        </div>
+
+
+        <div class="cards">
+
+
+          <article class="card">
+
+            <div>
+
+              <div class="card-tag">
+                Gestão 2026.2
+              </div>
+
+              <h3>
+                E-nominata
+              </h3>
+
+              <p>
+
+                Consulte a e-nominata oficial da gestão
+                através do formulário disponibilizado
+                pelo capítulo.
+
+              </p>
+
+            </div>
+
+
+            <a
+              class="card-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdn668Ca0zVkghBD-PK4jMBfPXQydRb292uMLVEpnkQGBj3gg/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              Acessar formulário
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+          </article>
+
+
+
+          <article class="card">
+
+            <div>
+
+              <div class="card-tag">
+                Arquivos
+              </div>
+
+              <h3>
+                Google Drive
+              </h3>
+
+              <p>
+
+                Espaço destinado aos arquivos,
+                documentos e materiais compartilhados
+                do Capítulo Nova Era nº 909.
+
+              </p>
+
+            </div>
+
+
+            <a
+              class="card-link"
+              href="https://drive.google.com/drive/folders/1zzTNtnxxXr3s2uOVQokQtA8FppJ04M7p"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              Acessar Drive
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         COMPOSIÇÃO DE FOTOS
+         FOTO 03 + FOTO 04
+    ========================================================== -->
+
+    <section class="offset-photo">
+
+      <div class="section-inner">
+
+        <div class="offset-layout">
+
+
+          <div class="offset-main">
+
+            <img
+              src="fotos/foto-03.jpg"
+              alt="Atividade do Capítulo Nova Era"
+            >
+
+          </div>
+
+
+          <div class="offset-small">
+
+            <img
+              src="fotos/foto-04.jpg"
+              alt="Registro da gestão"
+            >
+
+          </div>
+
+
+          <div class="offset-caption">
+
+            <span>
+              Gestão 2026.2
+            </span>
+
+            <p>
+
+              A página ganha movimento através
+              de imagens em diferentes escalas,
+              criando espaços assimétricos e
+              mais próximos de um editorial.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         ESTUDOS
+    ========================================================== -->
+
+    <section class="content-section" id="estudos">
+
+      <div class="section-inner">
+
+        <div class="section-head">
+
+          <h2 class="section-title">
+            Estudos
+          </h2>
+
+          <p class="section-description">
+
+            Ferramentas e materiais para auxiliar o
+            desenvolvimento dos irmãos durante
+            a gestão.
+
+          </p>
+
+        </div>
+
+
+        <div class="cards">
+
+
+          <article class="card">
+
+            <div>
+
+              <div class="card-tag">
+                Sistema
+              </div>
+
+              <h3>
+                SISDM
+              </h3>
+
+              <p>
+
+                Acesse o Sistema de Informação da
+                Ordem DeMolay para consultar os
+                recursos institucionais.
+
+              </p>
+
+            </div>
+
+
+            <a
+              class="card-link"
+              href="https://sis.demolaybrasil.org.br/login"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              Acessar SISDM
+
+              <span class="arrow">
+                →
+              </span>
+
+            </a>
+
+          </article>
+
+
+
+          <article class="card">
+
+            <div>
+
+              <div class="card-tag">
+                Desenvolvimento
+              </div>
+
+              <h3>
+                Conhecimento
+              </h3>
+
+              <p>
+
+                Um espaço pensado para incentivar
+                o aprendizado, a liderança e o
+                desenvolvimento contínuo dos irmãos.
+
+              </p>
+
+            </div>
+
+
+            <span class="card-link">
+              Nova Era nº 909
+            </span>
+
+          </article>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         FOTO VERTICAL
+         FOTO 05
+    ========================================================== -->
+
+    <section class="portrait-section">
+
+      <div class="section-inner">
+
+        <div class="portrait-grid">
+
+
+          <div class="portrait-image">
+
+            <img
+              src="fotos/foto-05.jpg"
+              alt="Momento da gestão"
+            >
+
+          </div>
+
+
+          <div class="portrait-text">
+
+            <small>
+              Uma nova geração
+            </small>
+
+            <h2>
+
+              Construindo
+              <br>
+              o futuro.
+
+            </h2>
+
+            <p>
+
+              Cada gestão deixa marcas.
+              Algumas estão nos documentos,
+              outras ficam nas memórias.
+
+              <br><br>
+
+              O objetivo é construir uma história
+              que possa continuar sendo lembrada
+              por quem fez parte dela.
+
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         PLAYLIST
+    ========================================================== -->
+
+    <section class="playlist" id="playlist">
+
+      <div class="section-inner">
+
+        <div class="playlist-box">
+
+
+          <div>
+
+            <h2>
+              Playlist<br>
+              DeMolay.
+            </h2>
+
+            <p>
+
+              Para ouvir e reviver alguns momentos
+              do capítulo. Uma seleção musical para
+              acompanhar a rotina, os encontros e
+              os momentos da gestão.
+
+            </p>
+
+          </div>
+
+
+          <a
+            class="spotify-button"
+            href="COLOQUE_O_LINK_DA_SUA_PLAYLIST_AQUI"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+
+            Abrir playlist
+
+          </a>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         GALERIA
+         FOTO 06
+         FOTO 07
+         FOTO 08
+         FOTO 09
+    ========================================================== -->
+
+    <section class="gallery-section">
+
+      <div class="section-inner">
+
+
+        <div class="gallery-intro">
+
+          <h2>
+
+            Alguns<br>
+            <em>momentos.</em>
+
+          </h2>
+
+          <p>
+
+            Registros que ajudam a contar a história
+            da Gestão 2026.2 do Capítulo Nova Era nº 909.
+
+          </p>
+
+        </div>
+
+
+        <div class="gallery">
+
+
+          <div class="gallery-item one">
+
+            <img
+              src="fotos/foto-06.jpg"
+              alt="Momento do Capítulo"
+            >
+
+          </div>
+
+
+          <div class="gallery-item two">
+
+            <img
+              src="fotos/foto-07.jpg"
+              alt="Momento do Capítulo"
+            >
+
+          </div>
+
+
+          <div class="gallery-item three">
+
+            <img
+              src="fotos/foto-08.jpg"
+              alt="Momento do Capítulo"
+            >
+
+          </div>
+
+
+          <div class="gallery-item four">
+
+            <img
+              src="fotos/foto-09.jpg"
+              alt="Momento do Capítulo"
+            >
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================================
+         AJUDA
+    ========================================================== -->
+
+    <section class="help" id="ajuda">
+
+      <div class="section-inner">
+
+        <div class="help-grid">
+
+
+          <h2>
+
+            Ajuda ao<br>
+            <em>irmão.</em>
+
+          </h2>
+
+
+          <div>
+
+            <p class="help-text">
+
+              Precisa de ajuda, tem alguma dúvida ou
+              precisa falar com alguém da gestão?
+
+              <br><br>
+
+              Utilize o canal direto de suporte para
+              entrar em contato.
+
+            </p>
+
+
+            <a
+              class="whatsapp-button"
+              href="https://wa.me/5567992269336?text=Ol%C3%A1%2C%20preciso%20de%20ajuda"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              Falar pelo WhatsApp
+
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- =========================================================
+       FOOTER
+  ========================================================== -->
+
+  <footer>
+
+    <div class="footer-inner">
+
+
+      <div>
+
+        <div class="footer-brand">
+          Nova Era nº 909
+        </div>
+
+        <div class="footer-sub">
+          Gestão 2026.2
+        </div>
+
+      </div>
+
+
+      <div class="footer-right">
+
+        Ordem DeMolay<br>
+        Capítulo Nova Era nº 909
+
+      </div>
+
+
     </div>
 
-    <!-- 2. Seção: Estudos -->
-    <div class="section-card">
-        <h2>Estudos</h2>
-        <p class="desc">Reservado a quem quer estudar um pouco mais sobre a ordem.</p>
-        
-        <div class="btn-container-grid">
-            <a href="https://drive.google.com/drive/folders/1zzTNtnxxXr3s2uOVQokQtA8FppJ04M7p" target="_blank" class="custom-btn">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg" alt="Google Drive">
-                <span>DRIVE DE ESTUDOS</span>
-            </a>
-            <a href="https://sis.demolaybrasil.org.br/login" target="_blank" class="custom-btn">
-                <!-- Imagem do SISDM -->
-                <img src="https://i.postimg.cc/j2h1qQbJ/brasao-demolay1-removebg.webp" alt="Logo SISDM">
-                <span>SISDM</span>
-            </a>
-        </div>
-        <div class="divider"></div>
-    </div>
+  </footer>
 
-    <!-- 3. Seção: Mapa da Irmandade -->
-    <div class="section-card">
-        <h2>Mapa da Irmandade</h2>
-        <p class="desc">Localização geográfica dos nossos irmãos.</p>
-        
-        <div id="map"></div>
-        <div class="divider"></div>
-    </div>
 
-    <!-- 4. Seção: Playlist DeMolay -->
-    <div class="section-card">
-        <h2>Playlist DeMolay</h2>
-        <p class="desc">Para quem quer reviver um pouco do capítulo em casa...</p>
-        
-        <!-- BOTÃO DO SPOTIFY QUE FUNCIONA EM TODOS OS NAVEGADORES E CELULARES -->
-        <div class="center-wrapper">
-            <!-- COLOQUE O LINK DA SUA PLAYLIST AQUI NO "href" -->
-            <a href="COLOQUE_O_LINK_DA_SUA_PLAYLIST_AQUI" target="_blank" class="btn-verde-largo" style="background: #1DB954; box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);">
-                <i class="fa-brands fa-spotify" style="font-size: 22px;"></i> Ouvir Playlist no Spotify
-            </a>
-        </div>
-        
-        <div class="divider"></div>
-    </div>
 
-    <!-- 5. Seção: Ajuda ao irmão -->
-    <div class="section-card">
-        <h2>Ajuda ao irmão</h2>
-        <p class="desc">Peça-me ajuda com qualquer assunto referente à Ordem DeMolay.</p>
-        
-        <div class="center-wrapper">
-            <a href="https://wa.me/5567992269336?text=Olá,%20preciso%20de%20ajuda" target="_blank" class="btn-verde-largo" style="background: #4ecc64;">
-                <i class="fa-brands fa-whatsapp" style="font-size: 22px;"></i> Portal de ajuda ao irmão
-            </a>
-        </div>
-    </div>
+  <!-- =========================================================
+       TEMA
+  ========================================================== -->
 
-</div>
+  <script>
 
-<!-- Scripts do Leaflet para carregar o Mapa e os Marcadores -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script>
-// Cria o mapa centralizado em Campo Grande
-const mapa = L.map('map').setView([-20.46, -54.61], 11);
+    let temaAtual = "escuro";
 
-// Camada visual do mapa (CartoDB Dark Matter - Sem API Key e visual escuro)
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19,
-    attribution: '© OpenStreetMap contributors © CARTO'
-}).addTo(mapa);
+    const themeToggle =
+      document.getElementById("themeToggle");
 
-// Lista de membros do Capítulo
-const membros = [
-    {
-        nome: "Nantes",
-        bairro: "Novos Estados",
-        lat: -20.401,
-        lng: -54.611
-    },
-    {
-        nome: "Hamer",
-        bairro: "Parque Lajeado",
-        lat: -20.528,
-        lng: -54.619
-    }
-];
 
-// Adiciona os marcadores no mapa
-membros.forEach(m => {
-    L.marker([m.lat, m.lng]).addTo(mapa)
-    .bindPopup(`
-        <div class="popup">
-            <h2>${m.nome}</h2>
-            <p>📍 ${m.bairro}</p>
-        </div>
-    `);
-});
-</script>
+    themeToggle.addEventListener("click", () => {
+
+      if (temaAtual === "escuro") {
+
+        document.body.classList.add("light");
+
+        temaAtual = "claro";
+
+        themeToggle.textContent = "☾";
+
+      } else {
+
+        document.body.classList.remove("light");
+
+        temaAtual = "escuro";
+
+        themeToggle.textContent = "☼";
+
+      }
+
+    });
+
+  </script>
+
 
 </body>
 </html>
